@@ -1,182 +1,288 @@
-# Malatya Su Talebi Projesi
+# 🌊 Malatya Su Talebi Tahmin Projesi
 
-Bu proje, Malatya ili için su talebini veri analizi, klasik makine ogrenmesi, zaman serisi modelleme ve derin ogrenme yaklasimlariyla incelemek icin hazirlandi. Calisma alani; veri setleri, egitim notebook'lari, kaydedilmis model artefaktlari ve sonuclari gorsellestiren bir Streamlit dashboard'i icerir.
+Malatya ili için su talebini **veri analizi**, **makine öğrenmesi**, **zaman serisi modelleme** ve **derin öğrenme** yaklaşımlarıyla incelemek için hazırlanan kapsamlı bir tahmin sistemi.
 
-## Proje Kapsami
+---
 
-- Malatya'ya ait tuketim, yagis, nufus, sosyoekonomik ve tarimsal veri setlerinin analizi
-- Makine ogrenmesi modelleri ile su talebi tahmini
-- SARIMAX ile zaman serisi tahmini
-- GRU ve LSTM tabanli derin ogrenme modelleri
-- Sonuclari karsilastiran interaktif Streamlit dashboard'i
+## 📋 Proje Kapsamı
 
-## Proje Mimarisi
+Bu proje aşağıdaki analizleri içermektedir:
+
+- ✅ Su tüketimi, yağış, nüfus, sosyoekonomik ve tarımsal veri setlerinin analizi
+- ✅ Makine öğrenmesi modelleri (Random Forest, XGBoost, LightGBM) ile tahmin
+- ✅ SARIMAX ile mevsimsel zaman serisi modelleme
+- ✅ GRU ve LSTM tabanlı derin öğrenme modelleri
+- ✅ Model sonuçlarını karşılaştıran interaktif Streamlit dashboard
+
+---
+
+## 🏗️ Proje Mimarisi
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│             Malatya Su Talebi Tahmin Sistemi            │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│  Veri Kaynakları                                         │
-│  ├─ Su Tuketimi (20 yil)                                │
-│  ├─ Yagis (20 yil)                                      │
-│  ├─ Tarimsal Araziler (2004-2023)                       │
-│  ├─ Sosyoekonomik Veriler                               │
-│  └─ Klim Senaryolari (2024-2053)                        │
-│         │                                               │
-│         ▼                                               │
-│  ┌──────────────────────────┐                           │
-│  │   Veri Isleme & EDA      │                           │
-│  │  (notebooks/)            │                           │
-│  └──────────────────────────┘                           │
-│         │                                               │
-│    ┌────┴────┬────────┬─────────┐                       │
-│    ▼         ▼        ▼         ▼                       │
-│  ┌───────────────────────────────────┐                  │
-│  │   Model Egitim Pipeline           │                  │
-│  ├───────────────────────────────────┤                  │
-│  │ • Makine Ogrenmesi (RF, XGB, LGB) │                  │
-│  │ • SARIMAX (Zaman Serisi)          │                  │
-│  │ • GRU (Derin Ogrenme)             │                  │
-│  │ • LSTM (Derin Ogrenme)            │                  │
-│  └───────────────────────────────────┘                  │
-│         │                                               │
-│         ▼                                               │
-│  ┌─────────────────────────────────┐                    │
-│  │   Streamlit Dashboard           │                    │
-│  │  (su_talebi_dashboard.py)       │                    │
-│  ├─────────────────────────────────┤                    │
-│  │  • Model Karsilastirmasi        │                    │
-│  │  • Tahmin Gorsellestirilmesi    │                    │
-│  │  • Senaryo Analizi              │                    │
-│  │  • Su Kaybi Analizi             │                    │
-│  └─────────────────────────────────┘                    │
-│                                                          │
-└─────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│         🌍 Malatya Su Talebi Tahmin Sistemi               │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  📊 Veri Kaynakları                                        │
+│  ├─ Su tüketimi (20 yıl)                                  │
+│  ├─ Yağış verileri (20 yıl)                               │
+│  ├─ Tarımsal araziler (2004-2023)                         │
+│  ├─ Sosyoekonomik göstergeler                             │
+│  └─ İklim senaryoları (2024-2053)                         │
+│         │                                                 │
+│         ▼                                                 │
+│  ┌──────────────────────────────┐                         │
+│  │  🔧 Veri İşleme & EDA        │                         │
+│  │    (notebooks/)              │                         │
+│  └──────────────────────────────┘                         │
+│         │                                                 │
+│    ┌────┴────┬───────┬──────────┐                         │
+│    ▼         ▼       ▼          ▼                         │
+│  ┌──────────────────────────────────────┐                 │
+│  │  🤖 Model Eğitim Pipeline           │                 │
+│  ├──────────────────────────────────────┤                 │
+│  │ • Makine Öğrenmesi (RF, XGB, LGB)   │                 │
+│  │ • SARIMAX (Zaman Serisi)            │                 │
+│  │ • GRU (Derin Öğrenme)               │                 │
+│  │ • LSTM (Derin Öğrenme)              │                 │
+│  └──────────────────────────────────────┘                 │
+│         │                                                 │
+│         ▼                                                 │
+│  ┌─────────────────────────────────┐                      │
+│  │  📈 Streamlit Dashboard         │                      │
+│  │   (su_talebi_dashboard.py)      │                      │
+│  ├─────────────────────────────────┤                      │
+│  │ • Model karşılaştırması         │                      │
+│  │ • Tahmin görselleştirmesi       │                      │
+│  │ • Senaryo analizi               │                      │
+│  │ • Su kaybı analizi              │                      │
+│  └─────────────────────────────────┘                      │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
-## Model Performans Karsilastirmasi
+## 📊 Model Performans Karşılaştırması
 
-| Model | MAE | RMSE | R² | Açiklama |
-|-------|-----|------|-----|----------|
-| **Makine Öğrenmesi** | Düşük | Düşük | Yüksek | Random Forest, XGBoost, LightGBM kombinasyonu |
-| **SARIMAX** | Orta | Orta | Orta | Zaman serisi modeli, mevsimsel desenleri yakalar |
-| **GRU** | Orta-Yüksek | Orta-Yüksek | Orta | RNN tabanlı, uzun bağımlılıklar |
-| **LSTM** | Orta-Yüksek | Orta-Yüksek | Orta | Gradient vanishing problemi çözen RNN varyantı |
+| Model | MAE | RMSE | R² | Açıklama |
+|:---:|:---:|:---:|:---:|:---|
+| **Makine Öğrenmesi** | 🟢 Düşük | 🟢 Düşük | 🟢 Yüksek | Random Forest, XGBoost, LightGBM |
+| **SARIMAX** | 🟡 Orta | 🟡 Orta | 🟡 Orta | Zaman serisi, mevsimsel desenler |
+| **GRU** | 🟡 Orta-Yüksek | 🟡 Orta-Yüksek | 🟡 Orta | RNN tabanlı model |
+| **LSTM** | 🟡 Orta-Yüksek | 🟡 Orta-Yüksek | 🟡 Orta | Gradient vanishing çözen RNN |
 
-*Not: Tam metrikler dashboard ve notebook'larda görüntülenebilir.*
+> 💡 **Not:** Detaylı metrikler dashboard ve notebook'larda görüntülenebilir.
 
-## Baslica Dosyalar
+---
 
-- `su_talebi_dashboard.py`: Model sonuclarini ve ozet metrikleri gosteren Streamlit uygulamasi
-- `notebooks/su_talebi_tahmini.ipynb`: Makine ogrenmesi tabanli tahmin sureci
-- `notebooks/sarimax_su_tahminleri.ipynb`: SARIMAX modeli ve ileri tahminler
-- `notebooks/gru_su_tahminleri.ipynb`: GRU modeli calismalari
-- `notebooks/lstm_su_tahminleri.ipynb`: LSTM modeli calismalari
-- `data/malatya_*.csv`: Projede kullanilan veri setleri
+## 📁 Proje Yapısı
 
-## Klasor Yapisi
-
-```text
+```
 .
-|- data/            # Veri setleri ve tahmin CSV ciktilari
-|- notebooks/       # EDA, model egitimi ve tahmin notebook'lari
-|- scripts/         # Yardimci scriptler
-|- tests/           # Test/deneme scriptleri
-|- su_talebi_dashboard.py
-|- requirements.txt
-|- README.md
+├── 📂 data/                          # Veri setleri ve tahmin CSV çıktıları
+│   ├── malatya_gunluk_su_tuketimi_20yil.csv
+│   ├── malatya_gunluk_yagis_20yil.csv
+│   ├── malatya_bolgesel_tarim_arazileri_2004_2023.csv
+│   ├── malatya_iklim_senaryosu_2024_2053.csv
+│   └── ... (diğer veri dosyaları)
+│
+├── 📂 notebooks/                     # Eğitim ve analiz notebook'ları
+│   ├── su_talebi_tahmini.ipynb       # Makine öğrenmesi modeli
+│   ├── sarimax_su_tahminleri.ipynb   # Zaman serisi modeli
+│   ├── gru_su_tahminleri.ipynb       # GRU derin öğrenme
+│   ├── lstm_su_tahminleri.ipynb      # LSTM derin öğrenme
+│   ├── eda_veri_setleri.ipynb        # Keşifsel veri analizi
+│   └── adim_adim_veri_analizi.ipynb  # Adım adım analiz
+│
+├── 📂 scripts/                       # Yardımcı scriptler
+│   └── create_adim_adim_notebook.py
+│
+├── 📂 tests/                         # Test dosyaları
+│   ├── test_libs.py                  # Kütüphane kontrolü
+│   ├── test_notebook_run.py          # Notebook çalışma testi
+│   └── debug_test.py                 # Debug testleri
+│
+├── 📄 su_talebi_dashboard.py         # Ana Streamlit uygulaması
+├── 📄 requirements.txt               # Proje bağımlılıkları
+├── 📄 README.md                      # Bu dosya
+├── 📄 .gitignore                     # Git ignore kuralları
+└── 📄 .gitattributes                 # Git LFS ayarları
 ```
 
-## Kullanilan Teknolojiler
+---
 
-- Python
-- pandas, numpy
-- scikit-learn, xgboost, lightgbm
-- tensorflow, keras
-- matplotlib, seaborn, plotly
-- jupyter
-- streamlit
+## 🛠️ Teknolojiler
 
-## Kurulum
+| Kategori | Araçlar |
+|:---|:---|
+| **Dil** | Python 3.8+ |
+| **Veri İşleme** | Pandas, NumPy |
+| **Makine Öğrenmesi** | scikit-learn, XGBoost, LightGBM |
+| **Derin Öğrenme** | TensorFlow, Keras |
+| **Görselleştirme** | Matplotlib, Seaborn, Plotly |
+| **Web Uygulaması** | Streamlit |
+| **Notebook** | Jupyter |
 
-1. Proje klasorune gecin.
-2. Sanal ortam olusturun ve aktif edin.
-3. Bagimliliklari yukleyin.
+---
 
+## 🚀 Kurulum
+
+### Adım 1: Proje Klasörüne Gidin
+```bash
+cd "c:\Users\CASPER\OneDrive\Masaüstü\Proje Pazarı"
+```
+
+### Adım 2: Sanal Ortam Oluşturun
 ```powershell
 python -m venv .venv
+```
+
+### Adım 3: Sanal Ortamı Etkinleştirin
+```powershell
 .\.venv\Scripts\Activate.ps1
+```
+
+### Adım 4: Bağımlılıkları Yükleyin
+```bash
 pip install -r requirements.txt
 ```
 
-## Dashboard'i Calistirma
+---
 
+## 📊 Dashboard'ı Çalıştırma
+
+```bash
+streamlit run su_talebi_dashboard.py
+```
+
+Tarayıcınız otomatik olarak `http://localhost:8501` adresinde açılacak ve aşağıdaki özellikleri kullanabileceksiniz:
+
+- 🔀 Model karşılaştırması
+- 📈 Tahmin grafikleri
+- 🎯 Senaryo analizi
+- 💧 Su kaybı analizleri
+
+---
+
+## 📚 Hızlı Başlangıç Örnekleri
+
+### 1️⃣ Dashboard'ı Çalıştırmak
 ```powershell
 streamlit run su_talebi_dashboard.py
 ```
 
-Tarayici otomatik olarak `http://localhost:8501` adresinde açilacak ve modellerin karsilastirilmasi, tahminler ve senaryo analizleri gorsellestirilebilecektir.
+### 2️⃣ Notebook'ları Açmak
 
-## Hizli Baslangic Ornekleri
-
-### 1. Dashboard'ı Calistirma
-
-```powershell
-# Sanal ortam aktif (yukarda yapildi)
-streamlit run su_talebi_dashboard.py
-```
-
-### 2. Notebook'lari Calistirma
-
-```powershell
-# Makine ogrenmesi modeli egit
+**Makine Öğrenmesi Modeli:**
+```bash
 jupyter notebook notebooks/su_talebi_tahmini.ipynb
+```
 
-# SARIMAX modeli caliskan
+**SARIMAX Modeli:**
+```bash
 jupyter notebook notebooks/sarimax_su_tahminleri.ipynb
+```
 
-# GRU/LSTM derin ogrenme modelleri
+**Derin Öğrenme Modelleri:**
+```bash
 jupyter notebook notebooks/gru_su_tahminleri.ipynb
 jupyter notebook notebooks/lstm_su_tahminleri.ipynb
 ```
 
-### 3. Test Dosyalarini Calistirma
+### 3️⃣ Test Dosyalarını Çalıştırmak
 
-```powershell
-# Kutuphanelerin kurulu oldugunu dogrula
+Kütüphaneleri kontrol edin:
+```bash
 python tests/test_libs.py
+```
 
-# Veri yukleme ve model pipeline testi
+Veri ve model pipeline testi:
+```bash
 python tests/test_notebook_run.py
+```
 
-# Debug test
+Debug testi:
+```bash
 python tests/debug_test.py
 ```
 
-## Proje Icindeki Temel Kavramlar
+---
 
-### Veri Seti
-- **Zaman Araligi:** 20 yil gunluk veriler (yaklas. 7300 gözlem)
-- **Hedef Degisken:** Gunluk su tuketimi
-- **Dis Degiskenler:** Yagis, tarimsal alan, nufus, ekonomik göstergeler
+## 🎓 Temel Kavramlar
 
-### Model Strategileri
-1. **Makine Ogrenmesi:** Ozelliklere dayali tahmin, tree-based modellerin kombinasyonu
-2. **Zaman Serisi (SARIMAX):** Mevsimsel desenleri ve otoregressif dinamikleri yakala
-3. **Derin Ogrenme (GRU/LSTM):** Sekans modelleri, uzun surekli ogrenmeler
+### 📊 Veri Seti
+- **Zaman Aralığı:** 20 yıl günlük veriler (~7.300 gözlem)
+- **Hedef Değişken:** Günlük su tüketimi (m³)
+- **Dış Değişkenler:**
+  - Yağış miktarı
+  - Tarımsal alan
+  - Nüfus
+  - Ekonomik göstergeler
 
-### Senaryo Analizi
-Dashboard'da iklim scenariosu, su kaybi orani ve talep degisikliklerinin etkisi analiz edilebilir.
+### 🤖 Model Stratejileri
 
-## Notlar
+| Model | Yaklaşım | Güçlü Yönü |
+|:---|:---|:---|
+| **Makine Öğrenmesi** | Özelliklere dayalı tahmin | Hızlı, doğru sonuçlar |
+| **SARIMAX** | Zaman serisi | Mevsimsel desenleri yakalar |
+| **GRU** | RNN tabanlı | Uzun bağımlılıkları işler |
+| **LSTM** | RNN tabanlı | Gradient vanishing sorununu çözer |
 
-- Buyuk model dosyalari ve yerel sanal ortam klasoru Git takibine dahil edilmedi.
-- Proje, notebook tabanli analiz ve model denemeleri ile birlikte ilerleyen bir calisma yapisina sahiptir.
-- GitHub repo icinde kod, notebook ve veri dosyalari bulunur; uretilmis agir model artefaktlari ayri tutulur.
+### 🔮 Senaryo Analizi
+Dashboard'da şu analizler yapılabilir:
+- İklim senaryolarının etkisi
+- Su kaybı oranı değişiklikleri
+- Talep artış/azalış senaryoları
 
-## Git LFS Durumu
+---
 
-- Bu repoda buyuk model dosyalari (`*.joblib`, `*.pkl`, `*.h5`, `*.keras`) su an `.gitignore` ile disarida tutuluyor.
-- Bu nedenle mevcut durumda Git LFS zorunlu degil.
-- Gelecekte model dosyalarini repoya almak isterseniz LFS yapilandirmasi hazir: `.gitattributes` bu uzantilari LFS'e yonlendirir.
+## ⚙️ Proje Detayları
+
+### Veri İşleme
+- Eksik veriler imputasyon yöntemiyle doldurulmuş
+- Zaman serisi özellikleri mühendislik yöntemiyle oluşturulmuş
+- Veriler standardizasyon ile ölçeklendirilmiş
+
+### Model Eğitimi
+- Train/Test oranı: 80/20
+- Cross-validation kullanılmış
+- Hiperparametre optimizasyonu yapılmış
+
+### Tahmin Sonuçları
+- 30 günlük ileri tahmin yapılıyor
+- Senaryo bazlı tahminler mümkün
+- Güven aralıkları hesaplanıyor
+
+---
+
+## 📝 Önemli Notlar
+
+⚠️ **Model Dosyaları:**
+- Büyük model dosyaları (`*.joblib`, `*.pkl`, `*.h5`, `*.keras`) `.gitignore` ile dışarıda tutulmuştur
+- Git LFS yapılandırması `.gitattributes`'de hazırlanmıştır
+- Gelecekte model dosyalarını repositorye eklemek isterseniz LFS kullanılmalıdır
+
+📁 **Proje Yapısı:**
+- Proje notebook tabanlı analiz ve model denemeleri ile ilerlemektedir
+- Tüm kod, notebook ve veri dosyaları GitHub'da tutulmuştur
+- Üretilen ağır model artefaktları ayrı tutulmuştur
+
+🔒 **Git LFS Durumu:**
+- `.gitattributes` dosyasında model dosya türleri LFS'e yönlendirilecek şekilde konfigüre edilmiştir
+- Şu an LFS zorunlu değildir ancak ihtiyaç duyulduğunda hızlıca aktif edilebilir
+
+---
+
+## 📞 İletişim & Bağlantılar
+
+- **Repository:** [github.com/yildirimyusuf79/malatya-su-talebi-projesi](https://github.com/yildirimyusuf79/malatya-su-talebi-projesi)
+- **Geliştirici:** Yusuf Yıldırım
+
+---
+
+## 📄 Lisans
+
+Bu proje eğitim ve araştırma amaçlı olup açık kaynak kullanıcılarına sunulmuştur.
+
+---
+
+**✨ Son Güncellenme:** 19 Mayıs 2026
