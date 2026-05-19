@@ -274,6 +274,7 @@ Dashboard'da şu analizler yapılabilir:
 ## 📞 İletişim & Bağlantılar
 
 - **Repository:** [github.com/yildirimyusuf79/malatya-su-talebi-projesi](https://github.com/yildirimyusuf79/malatya-su-talebi-projesi)
+- **LinkedIn:** [linkedin.com/in/yusuf-yıldırım](https://www.linkedin.com/in/yusuf-yıldırım-190445295)
 - **Geliştirici:** Yusuf Yıldırım
 
 ---
