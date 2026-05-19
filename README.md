@@ -19,46 +19,60 @@ Bu proje aşağıdaki analizleri içermektedir:
 ## 🏗️ Proje Mimarisi
 
 ```
-┌────────────────────────────────────────────────────────────┐
-│         🌍 Malatya Su Talebi Tahmin Sistemi               │
-├────────────────────────────────────────────────────────────┤
-│                                                            │
-│  📊 Veri Kaynakları                                        │
-│  ├─ Su tüketimi (20 yıl)                                  │
-│  ├─ Yağış verileri (20 yıl)                               │
-│  ├─ Tarımsal araziler (2004-2023)                         │
-│  ├─ Sosyoekonomik göstergeler                             │
-│  └─ İklim senaryoları (2024-2053)                         │
-│         │                                                 │
-│         ▼                                                 │
-│  ┌──────────────────────────────┐                         │
-│  │  🔧 Veri İşleme & EDA        │                         │
-│  │    (notebooks/)              │                         │
-│  └──────────────────────────────┘                         │
-│         │                                                 │
-│    ┌────┴────┬───────┬──────────┐                         │
-│    ▼         ▼       ▼          ▼                         │
-│  ┌──────────────────────────────────────┐                 │
-│  │  🤖 Model Eğitim Pipeline           │                 │
-│  ├──────────────────────────────────────┤                 │
-│  │ • Makine Öğrenmesi (RF, XGB, LGB)   │                 │
-│  │ • SARIMAX (Zaman Serisi)            │                 │
-│  │ • GRU (Derin Öğrenme)               │                 │
-│  │ • LSTM (Derin Öğrenme)              │                 │
-│  └──────────────────────────────────────┘                 │
-│         │                                                 │
-│         ▼                                                 │
-│  ┌─────────────────────────────────┐                      │
-│  │  📈 Streamlit Dashboard         │                      │
-│  │   (su_talebi_dashboard.py)      │                      │
-│  ├─────────────────────────────────┤                      │
-│  │ • Model karşılaştırması         │                      │
-│  │ • Tahmin görselleştirmesi       │                      │
-│  │ • Senaryo analizi               │                      │
-│  │ • Su kaybı analizi              │                      │
-│  └─────────────────────────────────┘                      │
-│                                                            │
-└────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                   🌊 Malatya Su Talebi Tahmin                   │
+│                         (End-to-End Pipeline)                   │
+└─────────────────────────────────────────────────────────────────┘
+                              ▼
+              ┌───────────────────────────────┐
+              │  📥 VERİ KAYNAKLARI           │
+              ├───────────────────────────────┤
+              │ • Su tüketimi (20 yıl)        │
+              │ • Yağış verileri              │
+              │ • Tarımsal ve sosyal veri     │
+              │ • İklim senaryoları           │
+              └───────────────────────────────┘
+                              ▼
+              ┌───────────────────────────────┐
+              │  🔧 VERİ İŞLEME & EDA         │
+              ├───────────────────────────────┤
+              │ • Eksik veri tamamlama        │
+              │ • Outlier tespiti             │
+              │ • Özellik mühendisliği        │
+              │ • Ölçeklendirme               │
+              └───────────────────────────────┘
+                              ▼
+      ┌───────────────────────┬───────────────────────┐
+      │                       │                       │
+   ▼  │                       ▼                       ▼
+┌───────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│  🤖 MAKİNE    │  │  ⏰ SARIMAX     │  │  🧠 DERİN        │
+│  ÖĞRENMESI    │  │  (Zaman Serisi)│  │  ÖĞRENME         │
+├───────────────┤  ├──────────────────┤  ├──────────────────┤
+│ • XGBoost    │  │ • Mevsimsel   │  │ • GRU / LSTM     │
+│ • LightGBM   │  │ • Otoregresif │  │ • Sekans Modeli  │
+│ • RandomFor. │  │               │  │ • Zaman Desenleri│
+└───────────────┘  └──────────────────┘  └──────────────────┘
+      │                   │                       │
+      └───────────────────┴───────────────────────┘
+                      ▼
+              ┌───────────────────────────────┐
+              │  📈 TAHMİN & DEĞERLENDİRME    │
+              ├───────────────────────────────┤
+              │ • Model performans metriği    │
+              │ • Çapraz doğrulama           │
+              │ • Hiper-parametre ttuning     │
+              │ • Tahmin çıktısı (30 gün)     │
+              └───────────────────────────────┘
+                              ▼
+              ┌───────────────────────────────┐
+              │  📊 STREAMLIT DASHBOARD       │
+              ├───────────────────────────────┤
+              │ • Model karşılaştırması       │
+              │ • İnteraktif grafikler        │
+              │ • Senaryo analizi             │
+              │ • Su kaybı analizleri         │
+              └───────────────────────────────┘
 ```
 
 ## 📊 Model Performans Karşılaştırması
