@@ -18,62 +18,47 @@ Bu proje aşağıdaki analizleri içermektedir:
 
 ## 🏗️ Proje Mimarisi
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   🌊 Malatya Su Talebi Tahmin                   │
-│                         (End-to-End Pipeline)                   │
-└─────────────────────────────────────────────────────────────────┘
-                              ▼
-              ┌───────────────────────────────┐
-              │  📥 VERİ KAYNAKLARI           │
-              ├───────────────────────────────┤
-              │ • Su tüketimi (20 yıl)        │
-              │ • Yağış verileri              │
-              │ • Tarımsal ve sosyal veri     │
-              │ • İklim senaryoları           │
-              └───────────────────────────────┘
-                              ▼
-              ┌───────────────────────────────┐
-              │  🔧 VERİ İŞLEME & EDA         │
-              ├───────────────────────────────┤
-              │ • Eksik veri tamamlama        │
-              │ • Outlier tespiti             │
-              │ • Özellik mühendisliği        │
-              │ • Ölçeklendirme               │
-              └───────────────────────────────┘
-                              ▼
-      ┌───────────────────────┬───────────────────────┐
-      │                       │                       │
-   ▼  │                       ▼                       ▼
-┌───────────────┐  ┌──────────────────┐  ┌──────────────────┐
-│  🤖 MAKİNE    │  │  ⏰ SARIMAX     │  │  🧠 DERİN        │
-│  ÖĞRENMESI    │  │  (Zaman Serisi)│  │  ÖĞRENME         │
-├───────────────┤  ├──────────────────┤  ├──────────────────┤
-│ • XGBoost    │  │ • Mevsimsel   │  │ • GRU / LSTM     │
-│ • LightGBM   │  │ • Otoregresif │  │ • Sekans Modeli  │
-│ • RandomFor. │  │               │  │ • Zaman Desenleri│
-└───────────────┘  └──────────────────┘  └──────────────────┘
-      │                   │                       │
-      └───────────────────┴───────────────────────┘
-                      ▼
-              ┌───────────────────────────────┐
-              │  📈 TAHMİN & DEĞERLENDİRME    │
-              ├───────────────────────────────┤
-              │ • Model performans metriği    │
-              │ • Çapraz doğrulama           │
-              │ • Hiper-parametre ttuning     │
-              │ • Tahmin çıktısı (30 gün)     │
-              └───────────────────────────────┘
-                              ▼
-              ┌───────────────────────────────┐
-              │  📊 STREAMLIT DASHBOARD       │
-              ├───────────────────────────────┤
-              │ • Model karşılaştırması       │
-              │ • İnteraktif grafikler        │
-              │ • Senaryo analizi             │
-              │ • Su kaybı analizleri         │
-              └───────────────────────────────┘
-```
+### Veri Akışı
+
+**1. Veri Kaynakları** 📥
+   - Su tüketimi (20 yıl günlük veriler)
+   - Yağış, sıcaklık ve iklim verileri
+   - Tarımsal araziler ve sulama bilgileri
+   - Sosyoekonomik göstergeler
+
+**2. Veri İşleme** 🔧
+   - Eksik veri temizliği ve imputasyon
+   - Outlier tespiti ve düzeltme
+   - Özellik mühendisliği ve transformasyon
+   - Ölçeklendirme ve normalizasyon
+
+**3. Model Eğitimi** 🤖
+   ```
+   ┌─────────────────────────────────────────┐
+   │  Makine Öğrenmesi                       │
+   │  • XGBoost • LightGBM • Random Forest   │
+   ├─────────────────────────────────────────┤
+   │  Zaman Serisi (SARIMAX)                 │
+   │  • Mevsimsel desenleri yakalar          │
+   │  • Otoregresif modelleme                │
+   ├─────────────────────────────────────────┤
+   │  Derin Öğrenme                          │
+   │  • GRU / LSTM                           │
+   │  • Sekans modellemesi                   │
+   └─────────────────────────────────────────┘
+   ```
+
+**4. Tahmin & Değerlendirme** 📈
+   - 30 günlük ileri tahmin
+   - Model performans metrikleri (MAE, RMSE, R²)
+   - Çapraz doğrulama ve validasyon
+   - Senaryo analizi
+
+**5. Görselleştirme** 📊
+   - Streamlit Dashboard
+   - İnteraktif grafikler ve karşılaştırmalar
+   - Senaryo analizleri
+   - Su kaybı ve talep analizleri
 
 ## 📊 Model Performans Karşılaştırması
 
