@@ -1,0 +1,23 @@
+.venv/
+__pycache__/
+
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+.ipynb_checkpoints/
+
+# Generated model artifacts
+*.joblib
+*.pkl
+*.h5
+*.keras
+
+# Local environment files
+.env
+.env.*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
