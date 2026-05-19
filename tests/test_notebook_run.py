@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from pathlib import Path
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score, mean_absolute_percentage_error
 from xgboost import XGBRegressor
@@ -9,8 +10,9 @@ print("NOTEBOOK TEST KURULUMU")
 print("=" * 60)
 
 # Veri yükleme
-df_su = pd.read_csv('malatya_gunluk_su_tuketimi_20yil.csv')
-df_yagis = pd.read_csv('malatya_gunluk_yagis_20yil.csv')
+BASE_DIR = Path(__file__).resolve().parents[1]
+df_su = pd.read_csv(BASE_DIR / 'data/malatya_gunluk_su_tuketimi_20yil.csv')
+df_yagis = pd.read_csv(BASE_DIR / 'data/malatya_gunluk_yagis_20yil.csv')
 
 print(f"✓ Veri yükleme tamamlandı")
 print(f"  Su: {df_su.shape}")

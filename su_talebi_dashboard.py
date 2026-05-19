@@ -24,15 +24,15 @@ MODEL_SPECS = {
     "Makine Öğrenmesi Modelleri": {
         "kind": "feature_bundle",
         "artifact": "su_talebi_modeli.joblib",
-        "notebook": "su_talebi_tahmini.ipynb",
+        "notebook": "notebooks/su_talebi_tahmini.ipynb",
         "description": "Linear Regression, Random Forest, XGBoost ve LightGBM karşılaştırması içinden seçilen en iyi model.",
     },
     "SARIMAX": {
         "kind": "sarimax",
         "artifact": "sarimax_su_tahmin_modeli.pkl",
         "info_file": "sarimax_model_info.joblib",
-        "forecast_file": "sarimax_gelecek_30gun_tahmin.csv",
-        "notebook": "sarimax_su_tahminleri.ipynb",
+        "forecast_file": "data/sarimax_gelecek_30gun_tahmin.csv",
+        "notebook": "notebooks/sarimax_su_tahminleri.ipynb",
         "description": "Dışsal değişkenli mevsimsel ARIMA modeli. Notebook'taki metrikler ve ileri tahmin artefaktları gösterilir.",
     },
     "GRU": {
@@ -40,7 +40,7 @@ MODEL_SPECS = {
         "artifact": "gru_su_tahmin_modeli.keras",
         "scaler_file": "gru_scaler.joblib",
         "info_file": "gru_model_info.joblib",
-        "notebook": "gru_su_tahminleri.ipynb",
+        "notebook": "notebooks/gru_su_tahminleri.ipynb",
         "description": "60 günlük pencere kullanan GRU tabanlı zaman serisi modeli.",
     },
     "LSTM": {
@@ -48,7 +48,7 @@ MODEL_SPECS = {
         "artifact": "lstm_su_tahmin_modeli.h5",
         "scaler_file": "lstm_scaler.joblib",
         "info_file": "lstm_model_info.joblib",
-        "notebook": "lstm_su_tahminleri.ipynb",
+        "notebook": "notebooks/lstm_su_tahminleri.ipynb",
         "description": "60 günlük pencere kullanan LSTM tabanlı zaman serisi modeli.",
     },
 }
@@ -261,8 +261,8 @@ def style_time_series_figure(fig, y_axis_title: str):
 
 @st.cache_data
 def load_data() -> pd.DataFrame:
-    df_su = pd.read_csv(BASE_DIR / "malatya_gunluk_su_tuketimi_20yil.csv")
-    df_yagis = pd.read_csv(BASE_DIR / "malatya_gunluk_yagis_20yil.csv")
+    df_su = pd.read_csv(BASE_DIR / "data/malatya_gunluk_su_tuketimi_20yil.csv")
+    df_yagis = pd.read_csv(BASE_DIR / "data/malatya_gunluk_yagis_20yil.csv")
 
     def with_date_col(df: pd.DataFrame, label: str) -> pd.DataFrame:
         date_cols = [c for c in df.columns if "tarih" in c.lower() or "date" in c.lower()]
@@ -285,7 +285,7 @@ def load_data() -> pd.DataFrame:
 
     # Tarımsal arazi ve sulu tarım verilerini yıllık dışsal değişken olarak entegre et.
     try:
-        tarim = pd.read_csv(BASE_DIR / "malatya_bolgesel_tarim_arazileri_2004_2023.csv")
+        tarim = pd.read_csv(BASE_DIR / "data/malatya_bolgesel_tarim_arazileri_2004_2023.csv")
         yil_col = next((c for c in tarim.columns if c.lower() in {"yil", "year"}), None)
         toplam_col = next((c for c in tarim.columns if "Toplam_Tarim_Alani" in c), None)
         sulu_col = next((c for c in tarim.columns if "Sulu_Tarim_Alani" in c), None)
@@ -393,7 +393,7 @@ def load_future_forecast_csv(file_name: str) -> pd.DataFrame:
 
 @st.cache_data
 def load_leakage_data() -> pd.DataFrame:
-    df = pd.read_csv(BASE_DIR / "malatya_kayip_kacak_20yil.csv")
+    df = pd.read_csv(BASE_DIR / "data/malatya_kayip_kacak_20yil.csv")
     date_col = next((c for c in df.columns if c.lower() in {"tarih", "date"}), None)
     if date_col:
         df["date"] = pd.to_datetime(df[date_col], errors="coerce")
@@ -404,7 +404,7 @@ def load_leakage_data() -> pd.DataFrame:
 
 @st.cache_data
 def load_climate_scenario_data() -> pd.DataFrame:
-    df = pd.read_csv(BASE_DIR / "malatya_iklim_senaryosu_2024_2053.csv")
+    df = pd.read_csv(BASE_DIR / "data/malatya_iklim_senaryosu_2024_2053.csv")
     date_col = next((c for c in df.columns if c.lower() in {"tarih", "date"}), None)
     if date_col:
         df["date"] = pd.to_datetime(df[date_col], errors="coerce")

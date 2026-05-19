@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
 
-df_su = pd.read_csv('malatya_gunluk_su_tuketimi_20yil.csv')
-df_yagis = pd.read_csv('malatya_gunluk_yagis_20yil.csv')
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parents[1]
+
+df_su = pd.read_csv(BASE_DIR / 'data/malatya_gunluk_su_tuketimi_20yil.csv')
+df_yagis = pd.read_csv(BASE_DIR / 'data/malatya_gunluk_yagis_20yil.csv')
 
 print("===== HEDEF SÜTUN TESPITI =====")
 target_col_list = [c for c in df_su.columns if 'su' in c.lower() and 'tuketim' in c.lower()]
